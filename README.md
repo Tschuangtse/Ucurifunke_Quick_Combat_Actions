@@ -50,7 +50,7 @@ npm test
 npm run build
 ```
 
-`dist/` enthält danach `module.json` und `ucurifunke-quick-combat-actions-v14-0.1.0.zip`. Für ein neues Release die Version in `package.json` und `module.json` sowie die versionsgebundene Download-URL aktualisieren, testen und bauen. Anschließend beide Dateien an einen GitHub-Release mit dem Tag `v<VERSION>` anhängen. Die Moduldateien liegen im ZIP direkt auf der obersten Ebene, entsprechend dem Aufbau der TickBasedCombat-Releasepakete.
+`dist/` enthält danach `module.json` und `ucurifunke-quick-combat-actions-v14-0.1.1.zip`. Für ein neues Release die Version in `package.json` und `module.json` sowie die versionsgebundene Download-URL aktualisieren, testen und bauen. Anschließend beide Dateien an einen GitHub-Release mit dem Tag `v<VERSION>` anhängen. Die Moduldateien liegen im ZIP direkt auf der obersten Ebene, entsprechend dem Aufbau der TickBasedCombat-Releasepakete.
 
 Die automatisierten Tests prüfen Kosten, Token-/Szenenzuordnung, Berechtigungen, Auswahlwechsel während asynchroner Abläufe und die Verwendung des TickBasedCombat-Setters. Das Paket enthält nur Laufzeitdateien und Dokumentation.
 

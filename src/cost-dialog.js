@@ -3,7 +3,9 @@ import { VARIABLE_COST, parseCost } from "./actions.js";
 export async function requestCost(action, selection) {
   // Construct text nodes for actor names; never interpolate world data into HTML.
   const content = document.createElement("div");
-  content.className = "uqca-cost-content";
+  // DialogV2 requires its outer content div to have no attributes at all.
+  const fields = document.createElement("div");
+  fields.className = "uqca-cost-content";
   const actor = document.createElement("p");
   actor.textContent = `Handlung für ${selection.combatant.name ?? selection.token.name ?? "Token"}`;
   const hint = document.createElement("p");
@@ -17,7 +19,8 @@ export async function requestCost(action, selection) {
   });
   input.setAttribute("aria-label", "Tickkosten");
   label.append(input);
-  content.append(actor, hint, label);
+  fields.append(actor, hint, label);
+  content.append(fields);
 
   return foundry.applications.api.DialogV2.prompt({
     window: { title: `${action.name} – Tickkosten` },
