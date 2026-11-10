@@ -1,0 +1,23 @@
+{
+  "id": "ucurifunke-quick-combat-actions",
+  "title": "Ucurifunke Quick Combat Actions",
+  "description": "Platzsparende SL-Leiste für Ucurifunke-Kampfhandlungen mit TickBasedCombat-Anbindung.",
+  "version": "0.1.0",
+  "authors": [{ "name": "Tschuangtse" }],
+  "compatibility": { "minimum": "14", "verified": "14.367", "maximum": "14.999" },
+  "relationships": {
+    "requires": [{
+      "id": "tick-combat",
+      "type": "module",
+      "compatibility": { "minimum": "0.3.5" },
+      "manifest": "https://github.com/Tschuangtse/TickBasedCombat/releases/latest/download/module.json"
+    }]
+  },
+  "esmodules": ["src/main.js"],
+  "styles": ["styles/actions.css"],
+  "url": "https://github.com/Tschuangtse/Ucurifunke_Quick_Combat_Actions",
+  "manifest": "https://github.com/Tschuangtse/Ucurifunke_Quick_Combat_Actions/releases/latest/download/module.json",
+  "download": "https://github.com/Tschuangtse/Ucurifunke_Quick_Combat_Actions/releases/download/v0.1.0/ucurifunke-quick-combat-actions-v14-0.1.0.zip",
+  "bugs": "https://github.com/Tschuangtse/Ucurifunke_Quick_Combat_Actions/issues",
+  "readme": "README.md"
+}
