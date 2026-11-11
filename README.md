@@ -1,6 +1,6 @@
 # Ucurifunke Quick Combat Actions
 
-Kompakte Handlungsleiste für Spielleiter und Spieler in Foundry VTT 14 und Ucurifunke. Voraussetzung ist **Tick Based Combat (`tick-combat`) ab Version 0.3.5**.
+Kompakte Handlungsleiste für Spielleiter und Spieler in Foundry VTT 14 und Ucurifunke. Voraussetzung ist **Tick Based Combat (`tick-combat`) ab Version 0.3.11**.
 
 ## Installation
 
@@ -29,15 +29,15 @@ In den Moduleinstellungen lässt sich die Leiste pro Client ausblenden und ihr A
 
 ## Regeln und Umfang
 
-Die 28 Buttons bilden die vier Kategorien im Kapitel **Handlungen im Kampf** des bereitgestellten Grundregelwerks ab. Die einzige Aufteilung ist **Parade (4 Ticks)** und **Parade mit Manöver (8 Ticks)**. Waffenabhängige Kosten, Nachladen, Rammen, Waffe ziehen, Fertigkeit nutzen und Zielen verwenden den variablen Dialog. Hinweise zu den Kosten stehen im Tooltip und bei variablen Handlungen zusätzlich im Dialog.
+Die 28 Buttons bilden die vier Kategorien im Kapitel **Handlungen im Kampf** des bereitgestellten Grundregelwerks ab. Die einzige Aufteilung ist **Parade (4 Ticks)** und **Parade mit Manöver (8 Ticks)**. Waffenabhängige Kosten, Nachladen, Rammen, Waffe ziehen, und Fertigkeit nutzen verwenden den variablen Dialog. Hinweise zu den Kosten stehen im Tooltip und bei variablen Handlungen zusätzlich im Dialog.
 
 Die Leiste verbucht ausschließlich Ticks auf den ausgewählten Kampfteilnehmer. Sie würfelt nicht, bewegt keine Tokens und verändert weder Lebensenergie noch Zustände, Ausrüstung oder Zielpersonen. Bei **Zurückreißen** und **Rammen** werden zusätzliche Ticks anderer Beteiligter separat verwaltet. Für Formationen und das Reichen einer Waffe handelt jedes Mitglied einzeln.
 
-Fortlaufende Handlungen werden mit ihrer eingegebenen Gesamtdauer gebucht; ihre regelgemäße Aufteilung in 8-Tick-Intervalle, Unterbrechungen und die spätere Ausführung ihres Effekts werden nicht automatisiert. Sonderfertigkeiten, kostenlose Kombinationen und Erleichterungen beurteilt der Spielleiter. Der Dialog folgt dem vereinbarten Bereich 0–32; der Hinweis für **Zielen** nennt zusätzlich das reguläre Maximum von 16 Ticks.
+Fortlaufende Handlungen werden mit ihrer eingegebenen Gesamtdauer gebucht; ihre regelgemäße Aufteilung in 8-Tick-Intervalle, Unterbrechungen und die spätere Ausführung ihres Effekts werden nicht automatisiert. Sonderfertigkeiten, kostenlose Kombinationen und Erleichterungen beurteilt der Spielleiter. Bei **Zielen** bucht jeder Klick einen Schritt von 4 Ticks. Die Spielrunde zählt die Schritte pro Zielvorgang bis zum Maximum von vier Schritten (16 Ticks).
 
 ## TickBasedCombat-Anbindung
 
-Die Integrationsstelle ist `src/combat.js`. Die lokale TickBasedCombat-Version 0.3.5 exportiert keine öffentliche `module.api`. Das Modul importiert daher `getCombatantInfo`, `setTicks` und `normalizeTicks` aus `tick-combat/src/data.js`. Relative Modul-URLs erhalten einen eventuell konfigurierten Foundry-URL-Präfix. Änderungen an dieser Schnittstelle erfordern eine Anpassung des Adapters.
+Die Integrationsstelle ist `src/combat.js`. TickBasedCombat exportiert keine öffentliche `module.api`. Das Modul importiert daher `getCombatantInfo`, `setTicks` und `normalizeTicks` aus `tick-combat/src/data.js`. Relative Modul-URLs erhalten einen eventuell konfigurierten Foundry-URL-Präfix. Änderungen an dieser Schnittstelle erfordern eine Anpassung des Adapters.
 
 Es wird der aktuelle Tickwert gelesen, die Kosten werden addiert und die Normalisierung der Abhängigkeit aufgerufen. Deren Hooks aktualisieren die Zeitleiste. Normalisierung kann alle relativen Tickpositionen gleichzeitig verschieben; der relative Abstand zwischen den Beteiligten entspricht dennoch der Buchung. 0-Tick-Handlungen lösen keine Schreiboperation und keine Normalisierung aus. Notizen und weitere TickBasedCombat-Daten bleiben durch dessen Setter erhalten. Positive Kosten beenden dessen Wartezustand.
 

@@ -35,7 +35,7 @@ export const CATEGORIES = [
     { id: "reload", name: "Nachladen", ticks: null, hint: "Ladezeit der Fernkampfwaffe in Ticks." },
     { id: "hand", name: "Waffenhand wechseln / Waffe reichen", ticks: 4, hint: "Beim Reichen müssen beide Akteure die Handlung einzeln durchführen." },
     { id: "draw", name: "Waffe ziehen", ticks: null, hint: "Einhändig: Seite 4, Rücken 8 Ticks. Zweihändig jeweils +4. Vom Boden: 4 Ticks. Sonderfertigkeiten berücksichtigen." },
-    { id: "aim", name: "Zielen", ticks: null, hint: "Regelwert: 4 Ticks je Punkt Erleichterung, maximal 16 Ticks. Gesamtkosten eingeben." }
+    { id: "aim", name: "Zielen", ticks: 4, hint: "Je Zielschritt 4 Ticks und 1 Punkt Erleichterung. Höchstens vier Zielschritte pro Zielvorgang." }
   ] }
 ];
 

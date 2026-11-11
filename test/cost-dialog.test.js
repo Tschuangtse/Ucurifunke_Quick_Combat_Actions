@@ -41,5 +41,5 @@ test("every variable action supplies an attribute-free outer div to DialogV2", a
     if (action.ticks !== null) continue;
     assert.equal(await requestCost(action, { combatant: { name: "Alrike" }, token: {} }), 8);
   }
-  assert.equal(inputs.length, 8);
+  assert.equal(inputs.length, 7);
 });

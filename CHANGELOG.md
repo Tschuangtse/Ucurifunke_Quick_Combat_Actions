@@ -1,5 +1,10 @@
 # Änderungsprotokoll
 
+## 0.2.1
+
+- Zielen bucht pro Klick einen festen Schritt von 4 Ticks. Die Spielrunde zählt höchstens vier Zielschritte pro Zielvorgang.
+- Tick Based Combat ab 0.3.11 behebt den Fehler bei Tickbuchungen mit deutscher Modulsprache.
+
 ## 0.2.0
 
 - Spieler können die Leiste für ausgewählte Tokens mit Owner-Berechtigung verwenden. Bei fehlender Berechtigung erscheint „Keine Berechtigung für diesen Akteur.“

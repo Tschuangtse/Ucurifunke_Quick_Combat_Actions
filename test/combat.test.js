@@ -27,9 +27,22 @@ test("complete four-category catalogue and exact fixed rule costs", () => {
   assert.equal(ACTIONS.get("stand").ticks, 6);
   assert.equal(ACTIONS.get("turn").ticks, 1);
   assert.equal(ACTIONS.get("allow-hit").ticks, 0);
-  for (const id of ["melee", "opportunity", "approach", "ram", "skill", "reload", "draw", "aim"]) {
+  for (const id of ["melee", "opportunity", "approach", "ram", "skill", "reload", "draw"]) {
     assert.equal(ACTIONS.get(id).ticks, null);
   }
+});
+
+test("aim books one four-tick step without opening a cost dialog", async () => {
+  const f = fixture();
+  const dock = new ActionDock({
+    getGame: () => f.game, getCanvas: () => f.canvas,
+    notify: message => assert.fail(message),
+    costPrompt: () => assert.fail("Aiming has fixed costs"),
+    applyTicks: (selection, ticks) => addActionTicks(selection, ticks, f)
+  });
+  dock.refresh = () => {};
+  await dock.execute("aim");
+  assert.deepEqual(f.calls, [["set", f.combatant, 15], ["normalize", f.game.combat]]);
 });
 
 test("manual cost input accepts zero and 32, rejects empty, fractional, and out-of-range input", () => {
