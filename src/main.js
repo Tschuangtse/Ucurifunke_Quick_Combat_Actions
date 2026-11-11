@@ -11,7 +11,7 @@ function refresh() {
 
 Hooks.once("init", () => {
   game.settings.register(MODULE_ID, "enabled", {
-    name: "Kampfhandlungen anzeigen", hint: "Kompakte Handlungsleiste anzeigen (nur für Spielleiter).",
+    name: "Kampfhandlungen anzeigen", hint: "Kompakte Handlungsleiste anzeigen.",
     scope: "client", config: true, type: Boolean, default: true, onChange: refresh
   });
   game.settings.register(MODULE_ID, "bottomOffset", {
@@ -21,7 +21,6 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", async () => {
-  if (!game.user?.isGM) return;
   if (!game.modules.get(DEPENDENCY_ID)?.active) {
     ui.notifications.error("Ucurifunke Kampfhandlungen benötigt Tick Based Combat.");
     return;
@@ -37,6 +36,6 @@ Hooks.once("ready", async () => {
 });
 
 for (const hook of ["controlToken", "canvasReady", "canvasTearDown", "createCombat", "updateCombat", "deleteCombat",
-  "createCombatant", "updateCombatant", "deleteCombatant", "updateToken", "deleteToken", "updateUser", "renderCombatTracker"]) {
+  "createCombatant", "updateCombatant", "deleteCombatant", "updateToken", "deleteToken", "updateActor", "updateUser", "renderCombatTracker"]) {
   Hooks.on(hook, refresh);
 }

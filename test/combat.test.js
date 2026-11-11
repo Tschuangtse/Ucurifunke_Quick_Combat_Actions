@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CATEGORIES, ACTIONS, parseCost } from "../src/actions.js";
 import { getSelection, addActionTicks } from "../src/combat.js";
+import { ActionDock } from "../src/dock.js";
 
 function fixture() {
   const combatant = { id: "combatant-a", tokenId: "token-a", sceneId: "scene-a", actor: { id: "shared-actor" } };
@@ -71,6 +72,39 @@ test("adds to the existing value and delegates normalization to TickBasedCombat"
   const f = fixture();
   await addActionTicks(getSelection(f.game, f.canvas), 4, f);
   assert.deepEqual(f.calls, [["set", f.combatant, 15], ["normalize", f.game.combat]]);
+});
+
+test("players can book ticks for their owned token", async () => {
+  const f = fixture();
+  f.game.user.isGM = false;
+  f.canvas.tokens.controlled[0].document.isOwner = true;
+  await addActionTicks(getSelection(f.game, f.canvas), 4, f);
+  assert.deepEqual(f.calls, [["set", f.combatant, 15]]);
+});
+
+test("unowned token shows the required warning before prompting for variable costs", async () => {
+  const f = fixture();
+  f.game.user.isGM = false;
+  f.canvas.tokens.controlled[0].document.isOwner = false;
+  const warnings = [];
+  const dock = new ActionDock({
+    getGame: () => f.game, getCanvas: () => f.canvas, notify: message => warnings.push(message),
+    costPrompt: () => assert.fail("No dialog for an unowned token"),
+    applyTicks: () => assert.fail("No tick write for an unowned token")
+  });
+  await dock.execute("melee");
+  assert.deepEqual(warnings, ["Keine Berechtigung für diesen Akteur."]);
+});
+
+test("ownership revoked during a variable cost dialog prevents booking", async () => {
+  const f = fixture();
+  f.game.user.isGM = false;
+  const document = f.canvas.tokens.controlled[0].document;
+  document.isOwner = true;
+  const expected = getSelection(f.game, f.canvas);
+  document.isOwner = false;
+  await assert.rejects(addActionTicks(expected, 8, f), { message: "Keine Berechtigung für diesen Akteur." });
+  assert.deepEqual(f.calls, []);
 });
 
 test("zero ticks does not wake waiting combatants or advance time", async () => {

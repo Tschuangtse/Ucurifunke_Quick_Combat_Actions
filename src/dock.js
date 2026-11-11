@@ -1,5 +1,5 @@
 import { ACTIONS, CATEGORIES, parseCost } from "./actions.js";
-import { MODULE_ID, getSelection, addActionTicks } from "./combat.js";
+import { MODULE_ID, OWNERSHIP_ERROR, getSelection, addActionTicks } from "./combat.js";
 import { requestCost } from "./cost-dialog.js";
 
 export class ActionDock {
@@ -12,7 +12,7 @@ export class ActionDock {
 
   refresh() {
     const game = this.getGame();
-    if (!game.user?.isGM || !game.settings.get(MODULE_ID, "enabled")) {
+    if (!game.user || !game.settings.get(MODULE_ID, "enabled")) {
       this.root?.remove();
       this.root = null;
       this.expanded = null;
@@ -105,7 +105,8 @@ export class ActionDock {
     for (const button of this.root.querySelectorAll("[data-category]")) {
       button.setAttribute("aria-expanded", String(button.dataset.category === this.expanded));
     }
-    for (const button of this.root.querySelectorAll("[data-action-id]")) button.disabled = this.busy || Boolean(selection.error);
+    const blocked = selection.error && selection.error !== OWNERSHIP_ERROR;
+    for (const button of this.root.querySelectorAll("[data-action-id]")) button.disabled = this.busy || Boolean(blocked);
     this.root.setAttribute("aria-busy", String(this.busy));
   }
 

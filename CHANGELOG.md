@@ -1,5 +1,10 @@
 # Änderungsprotokoll
 
+## 0.2.0
+
+- Spieler können die Leiste für ausgewählte Tokens mit Owner-Berechtigung verwenden. Bei fehlender Berechtigung erscheint „Keine Berechtigung für diesen Akteur.“
+- Der Spielleiter kann weiterhin alle Kampfteilnehmer über die Leiste bedienen.
+
 ## 0.1.1
 
 - Fehler beim Öffnen variabler Tickkosten behoben: Der äußere Dialoginhalt ist jetzt ein attributfreies `div`, wie von Foundry V14 verlangt. Die CSS-Klasse liegt auf einem inneren Element.

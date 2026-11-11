@@ -1,6 +1,6 @@
 # Ucurifunke Quick Combat Actions
 
-Kompakte, ausschließlich für Spielleiter sichtbare Handlungsleiste für Foundry VTT 14 und Ucurifunke. Voraussetzung ist **Tick Based Combat (`tick-combat`) ab Version 0.3.5**.
+Kompakte Handlungsleiste für Spielleiter und Spieler in Foundry VTT 14 und Ucurifunke. Voraussetzung ist **Tick Based Combat (`tick-combat`) ab Version 0.3.5**.
 
 ## Installation
 
@@ -16,6 +16,8 @@ Kompakte, ausschließlich für Spielleiter sichtbare Handlungsleiste für Foundr
 Alternativ das Release-ZIP nach `Data/modules/ucurifunke-quick-combat-actions/` entpacken. `module.json`, `src/` und `styles/` müssen direkt in diesem Verzeichnis liegen. Danach Foundry neu starten. Die öffentliche Installation benötigt keine Zugangsdaten. Die stabile Manifest-URL dient auch zukünftigen Updates.
 
 ## Bedienung
+
+Spieler benötigen in Foundry die Berechtigungsstufe **Owner** für den ausgewählten Token. Beim Klick auf eine Handlung für einen fremden Token erscheint „Keine Berechtigung für diesen Akteur.“ Der Spielleiter kann alle Kampfteilnehmer bedienen.
 
 Die vier Kategorien **Offensiv**, **Defensiv**, **Bewegung** und **Taktisch** befinden sich unten mittig über der Makroleiste. Ein Klick öffnet jeweils eine Kategorie. Erneutes Anklicken, der Pfeil im Listenkopf oder Escape bei Fokus in der Leiste klappt die Liste ein. Nach erfolgreicher Tickbuchung klappt sie automatisch ein.
 
@@ -50,7 +52,7 @@ npm test
 npm run build
 ```
 
-`dist/` enthält danach `module.json` und `ucurifunke-quick-combat-actions-v14-0.1.1.zip`. Für ein neues Release die Version in `package.json` und `module.json` sowie die versionsgebundene Download-URL aktualisieren, testen und bauen. Anschließend beide Dateien an einen GitHub-Release mit dem Tag `v<VERSION>` anhängen. Die Moduldateien liegen im ZIP direkt auf der obersten Ebene, entsprechend dem Aufbau der TickBasedCombat-Releasepakete.
+`dist/` enthält danach `module.json` und das ZIP mit der Versionsnummer im Dateinamen. Für ein neues Release die Version in `package.json` und `module.json` sowie die versionsgebundene Download-URL aktualisieren, testen und bauen. Anschließend beide Dateien an einen GitHub-Release mit dem Tag `v<VERSION>` anhängen.
 
 Die automatisierten Tests prüfen Kosten, Token-/Szenenzuordnung, Berechtigungen, Auswahlwechsel während asynchroner Abläufe und die Verwendung des TickBasedCombat-Setters. Das Paket enthält nur Laufzeitdateien und Dokumentation.
 
@@ -63,7 +65,7 @@ Vor produktiver Nutzung in Foundry 14 prüfen:
 - Keine/mehrere Tokens und einen Token außerhalb der Turnorder auswählen: Buttons bleiben deaktiviert.
 - Während des Dialogs den Kampf beenden oder wechseln: keine Buchung.
 - Mit zwei Tokens desselben Akteurs prüfen, dass nur der ausgewählte Teilnehmer betroffen ist.
-- Als Spieler prüfen, dass die Leiste nicht sichtbar ist.
+- Als Spieler mit Owner-Berechtigung eine Handlung buchen. Bei einem fremden Token die Berechtigungsmeldung prüfen.
 
 Foundry-spezifische Fensterdarstellung und die Integration in eine echte Welt benötigen zusätzlich diesen Praxistest.
 

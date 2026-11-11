@@ -1,9 +1,10 @@
 export const MODULE_ID = "ucurifunke-quick-combat-actions";
 export const DEPENDENCY_ID = "tick-combat";
+export const OWNERSHIP_ERROR = "Keine Berechtigung für diesen Akteur.";
 
 // Token identity matters: multiple tokens can share the same actor.
 export function getSelection(game, canvas) {
-  if (!game.user?.isGM) return { error: "Nur der Spielleiter kann Kampfhandlungen ausführen." };
+  if (!game.user) return { error: OWNERSHIP_ERROR };
   if (!game.modules.get(DEPENDENCY_ID)?.active) return { error: "Tick Based Combat muss aktiviert sein." };
   const combat = game.combat;
   if (!combat?.started) return { error: "Kein laufender Kampf ausgewählt." };
@@ -11,6 +12,7 @@ export function getSelection(game, canvas) {
   const selected = canvas.tokens?.controlled ?? [];
   if (selected.length !== 1) return { error: "Genau ein Token auswählen." };
   const token = selected[0];
+  if (!game.user.isGM && !token.document?.isOwner) return { error: OWNERSHIP_ERROR };
   const sceneId = token.document?.parent?.id ?? canvas.scene.id;
   const combatants = [...(combat.combatants ?? [])].filter(candidate =>
     candidate.tokenId === token.id && (candidate.sceneId ?? combat.scene?.id) === sceneId
@@ -47,5 +49,6 @@ export async function addActionTicks(expected, ticks, { game, canvas, loadApi = 
   const current = api.getCombatantInfo(expected.combatant).ticks;
   if (!Number.isInteger(current)) throw new Error("Der aktuelle Tickwert ist ungültig.");
   await api.setTicks(expected.combatant, current + ticks);
-  await api.normalizeTicks(expected.combat);
+  // Player updates are normalized by TickBasedCombat's update hook on the active GM client.
+  if (game.user.isGM) await api.normalizeTicks(expected.combat);
 }
